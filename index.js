@@ -1,6 +1,11 @@
 const app = require("express")();
 const http = require("http").Server(app);
-const io = require("socket.io")(http);
+const io = require("socket.io")(http, {
+  allowRequest: (req, callback) => {
+    const noOriginHeader = req.headers.origin === undefined;
+    callback(null, noOriginHeader);
+  },
+});
 const WebSocket = require("ws");
 const {
   DISCORD_GATEWAY_AUTH,
