@@ -27,6 +27,13 @@ const handleMessage = (event, callback) => {
     return;
   }
 
+  if (
+    eventData.t === "PRESENCE_UPDATE" &&
+    eventData.d.user.id != process.env.DISCORD_USER_ID
+  ) {
+    return;
+  }
+
   if (eventData.t === "GUILD_MEMBERS_CHUNK") {
     if (eventData.d.presences.length > 0) {
       const filter = eventData.d.presences[0].activities.filter(
