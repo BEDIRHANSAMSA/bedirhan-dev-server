@@ -16,6 +16,7 @@ const waitForSocketConnection = require("./lib/socket");
 require("dotenv").config();
 
 const port = process.env.PORT || 3000;
+let PROFILE_URL;
 
 const handleMessage = (event, callback) => {
   const eventData = JSON.parse(event.data);
@@ -40,6 +41,8 @@ const handleMessage = (event, callback) => {
         (activity) => activity.name != "Custom Status"
       );
 
+      PROFILE_URL = DISCORD_USER_AVATAR + eventData.d.members[0].user.avatar;
+
       callback({
         status: eventData.d.presences[0].status,
         profileUrl: DISCORD_USER_AVATAR + eventData.d.members[0].user.avatar,
@@ -60,11 +63,13 @@ const handleMessage = (event, callback) => {
 
       callback({
         status: eventData.d.status,
+        profileUrl: PROFILE_URL,
         activities: filter,
       });
     } else {
       callback({
         status: "offline",
+        profileUrl: PROFILE_URL,
         activities: [],
       });
     }
