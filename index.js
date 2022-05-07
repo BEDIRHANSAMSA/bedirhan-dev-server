@@ -53,13 +53,11 @@ const handleMessage = (event, callback) => {
 
       callback({
         status: eventData.d.status,
-        profileUrl: DISCORD_USER_AVATAR + eventData.d.user.avatar,
         activities: filter,
       });
     } else {
       callback({
         status: "offline",
-        profileUrl: DISCORD_USER_AVATAR + eventData.d.user.avatar,
         activities: [],
       });
     }
